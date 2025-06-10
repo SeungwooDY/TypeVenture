@@ -25,21 +25,26 @@ class Player:
         else:
             print("\nInvalid direction!")
 
-    def pick_item(self, item):
-        self.inventory.append(item)
-        print(f"\nYou picked up ({item}).")
-
-    def show_inventory(self):
-        return self.inventory
-    
-    def get_strength(self):
-        return self.strength
+    def get_name(self):
+        return self.name
     
     def get_location(self):
         return self.location
     
-    def get_name(self):
-        return self.name
+    def show_inventory(self):
+        return self.inventory
+    
+    def get_lives(self):
+        return self.lives
+    
+    def get_experience(self):
+        return self.experience
+    
+    def get_strength(self):
+        return self.strength
+    
+    def get_level_up_threshold(self):
+        return level_up_threshold
     
     def lose_life(self):
         self.lives -= 1
@@ -71,3 +76,27 @@ class Player:
             print(f"\nYou not have {self.lives} lives and {self.strength} strength.")
         else:
             print("\nNot enough experience to level up.")
+
+    def pick_item(self, item):
+        self.inventory.append(item)
+        print(f"\nYou picked up ({item}).")
+        equip = input(f"\nWould you like to equip this item? (yes/no)")
+        if equip.strip().lower() == "yes":
+            print(f"\nYou equipped the {item}.")
+            self.equip(item)
+
+    def equip(self, item):
+        if item == "sword":
+            self.strength += 5
+            print("\nYou equipped a sword. Strength increased by 5.")
+            self.inventory.remove("sword")
+        elif item == "shield":
+            self.lives += 1
+            print("\nYou equipped a shield. Lives increased by 1.")
+            self.inventory.remove("shield")
+        elif item == "potion":
+            self.inventory.append("potion")
+            print("\nYou equipped a potion. You can use it to restore a life.")
+        else:
+            print("\nUnknown item!")
+    

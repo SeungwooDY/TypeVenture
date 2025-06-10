@@ -14,7 +14,7 @@ def Start():
     print("\nType 'exit' to quit the game.")
 
     while True:
-        command = input(f"\n{str(player.get_name())}, where would you like to go? ").strip().lower()
+        command = input(f"\n{str(player.get_name())}, what would you like to do? ").strip().lower()
         
         if command in ["north", "south", "east", "west"]:
             player.move(command)
@@ -41,7 +41,7 @@ def Start():
                         else:
                             print("\nYou chose not to use a potion.")
                 elif action == "flee":
-                    if random.choice([True, True, False]):
+                    if random.randint(1, player.get_strength()) > random.randint(1, 20):
                         print("\nYou fled safely.")
                     else:
                         print("\nYou couldn't escape!")
@@ -57,6 +57,16 @@ def Start():
                 print("\nYou found nothing of interest here.")
         elif command == "inventory":
             print(str(player.show_inventory()))
+        elif command == "strength":
+            print(f"\nYour current strength is {player.get_strength()}.")
+        elif command == "lives":
+            print(f"\nYou have {player.get_lives()} lives remaining.")
+        elif command == "experience":
+            print(f"You need {player.get_level_up_threshold() - player.get_experience()} experience points to level up.")
+        elif command == "potion":
+            player.use_potion()
+        elif command == "shield":
+            player.equip("shield")
         elif command == "exit":
             print("\nThanks for playing!")
             break
