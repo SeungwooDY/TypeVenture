@@ -29,7 +29,7 @@ def Start():
                 print("\nA wild monster appears!")
                 action = input("Do you want to (fight) or (flee)? ").strip().lower()
                 if action == "fight":
-                    if random.choice([True, False]):
+                    if random.randint(1, player.get_strength()) > random.randint(1, 20):
                         print("\nYou defeated the monster!")
                         player.gain_experience(20)
                     else:
@@ -56,7 +56,7 @@ def Start():
             else:
                 print("\nYou found nothing of interest here.")
         elif command == "inventory":
-            player.show_inventory()
+            print(str(player.show_inventory()))
         elif command == "exit":
             print("\nThanks for playing!")
             break

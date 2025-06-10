@@ -30,7 +30,10 @@ class Player:
         print(f"\nYou picked up ({item}).")
 
     def show_inventory(self):
-        print("\nYour inventory:", ", ".join(self.inventory))
+        return self.inventory
+    
+    def get_strength(self):
+        return self.strength
     
     def get_location(self):
         return self.location
@@ -59,11 +62,12 @@ class Player:
     
     def level_up(self):
         if self.experience >= level_up_threshold:
-            self.experience -= 100
+            self.experience -= level_up_threshold
             print(f"\nCongratulations {self.name}! You leveled up!")
             level_up_threshold *= 1.5
             self.lives += 1
+            self.strength += 5
             print("\nCongratulations! You leveled up and gained an extra life!")
+            print(f"\nYou not have {self.lives} lives and {self.strength} strength.")
         else:
             print("\nNot enough experience to level up.")
-
