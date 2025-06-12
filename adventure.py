@@ -1,6 +1,7 @@
 from player import Player
 import random
 import monsters
+import equipment
 
 def Start():
     print("Welcome to TextVentures!")
@@ -24,7 +25,7 @@ def Start():
             event = random.choice(["nothing", "monster", "item"])
 
             if event == "item":
-                item = random.choice(["sword", "shield", "potion"])
+                item = random.choice(equipment.equipmentList)
                 player.pick_item(item)
             elif event == "monster":
                 monster = random.choice(monsters.monsterList)

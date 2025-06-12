@@ -1,4 +1,5 @@
 import random
+import json
 
 class Monster:
     def __init__(self, name, strength, lives, exp):
@@ -24,8 +25,16 @@ class Monster:
 
 
 # Define some monsters with their attributes
-wolf = Monster("Wolf", 5, 1, 10)
-goblin = Monster("Goblin", 7, 2, 25)
-dragon = Monster("Dragon", 15, 3, 50)
+with open ("monster.json") as file:
+    monsters_data = json.load(file)
 
-monsterList = [wolf, goblin, dragon]
+monsterList = []
+
+for item in monsters_data:
+    name = item["name"]
+    strength = item["strength"]
+    lives = item["lives"]
+    exp = item["exp"]
+
+    monster = Monster(name, strength, lives, exp)
+    monsterList.append(monster)

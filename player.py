@@ -11,6 +11,7 @@ class Player:
         self.location = "castle"
         self.inventory = []
         self.lives = 3
+        self.max_lives = 3
         self.experience = 0
         self.strength = 10
 
@@ -71,36 +72,56 @@ class Player:
     
     def level_up(self):
         if self.experience >= level_up_threshold:
-            self.experience -= level_up_threshold
+            self.experience = self.experience - level_up_threshold
             print(f"\nCongratulations {self.name}! You leveled up!")
             level_up_threshold *= 1.5
             self.lives += 1
             self.strength += 5
             print("\nCongratulations! You leveled up and gained an extra life!")
-            print(f"\nYou not have {self.lives} lives and {self.strength} strength.")
+            print(f"\nYou now have {self.lives} lives and {self.strength} strength.")
         else:
             print("\nNot enough experience to level up.")
 
     def pick_item(self, item):
-        self.inventory.append(item)
-        print(f"\nYou picked up ({item}).")
-        equip = input(f"\nWould you like to equip this item? (yes/no)")
-        if equip.strip().lower() == "yes":
-            print(f"\nYou equipped the {item}.")
-            self.equip(item)
+        if len(self.inventory) > 10:
+            print("\nYour inventory is full! You cannot pick up any more items.")
+        else: 
+            self.inventory.append(item)
+            print(f"\nYou picked up ({item}).")
+            equip = input(f"\nWould you like to equip this item? (yes/no)")
+            if equip.strip().lower() == "yes":
+                print(f"\nYou equipped the {item}.")
+                self.equip(item)
 
     def equip(self, item):
         if item == "sword":
             self.strength += 5
             print("\nYou equipped a sword. Strength increased by 5.")
             self.inventory.remove("sword")
+        elif item == "upgraded sword":
+            self.strength += 20
+            print("\nYou equipped an upgraded sword. Strength increased by 20.")
+            self.inventory.remove("upgraded sword")
         elif item == "shield":
-            self.lives += 1
+            self.max_lives += 1
             print("\nYou equipped a shield. Lives increased by 1.")
             self.inventory.remove("shield")
+        elif item == "upgraded shield":
+            self.max_lives += 5
+            print("\nYou equipped an upgraded shield. Lives increased by 5.")
+            self.inventory.remove("upgraded shield")
         elif item == "potion":
+            self.inventory.append("potion")
+            print("\nYou equipped a potion. You can use it to restore a life.")
+        elif item == "upgraded potion":
             self.inventory.append("potion")
             print("\nYou equipped a potion. You can use it to restore a life.")
         else:
             print("\nUnknown item!")
     
+    def upgrade_item(self, item):
+        if self.inventory.count(item) >= 3:
+            self.inventory.remove(item)
+            upgraded_item = "upgraded " + item
+            self.inventory.append(upgraded_item)
+            print(f"\nYou upgraded your {item} to {upgraded_item}.")

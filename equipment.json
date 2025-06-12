@@ -1,0 +1,18 @@
+[
+    { "name": "Stick", "type": "WEAPON", "stat": 1, "rarity": "common" },
+    { "name": "Wood Plate", "type": "ARMOR", "stat": 1, "rarity": "common" },
+    { "name": "Water", "type": "POTION", "stat": 1, "rarity": "common" },
+
+    { "name": "Sword", "type": "WEAPON", "stat": 3, "rarity": "uncommon" },
+    { "name": "Shield", "type": "ARMOR", "stat": 3, "rarity": "uncommon" },
+    { "name": "Potion", "type": "POTION", "stat": 3, "rarity": "uncommon" }, 
+
+    { "name": "Katana", "type": "WEAPON", "stat": 5, "rarity": "rare" },
+    { "name": "Sturdy Shield", "type": "ARMOR", "stat": 5, "rarity": "rare" },
+    { "name": "Elixir", "type": "POTION", "stat": 5, "rarity": "rare" },
+
+    { "name": "Lightsaber", "type": "WEAPON", "stat": 10, "rarity": "legendary" },
+    { "name": "Impenetrable Shield", "type": "ARMOR", "stat": 10, "rarity": "legendary" },
+    { "name": "Boba", "type": "POTION", "stat": 10, "rarity": "legendary" }
+  ]
+  

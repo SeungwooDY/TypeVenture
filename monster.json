@@ -1,0 +1,5 @@
+[
+    { "name": "Wolf", "strength": 5, "lives": 1, "exp": 10 },
+    { "name": "Goblin", "strength": 7, "lives": 2, "exp": 25 },
+    { "name": "Dragon", "strength": 15, "lives": 3, "exp": 50}
+]
