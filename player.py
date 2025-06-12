@@ -3,6 +3,7 @@ import random as rdm
 locations = ["castle", "cave", "woods", "village", "mountain", "forest"]
 
 level_up_threshold = 100
+player_level = 1
 
 class Player:
     def __init__(self, name):
@@ -45,6 +46,9 @@ class Player:
     
     def get_level_up_threshold(self):
         return level_up_threshold
+    
+    def get_level(self):
+        return player_level
     
     def lose_life(self):
         self.lives -= 1

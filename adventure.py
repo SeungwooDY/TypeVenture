@@ -1,5 +1,6 @@
 from player import Player
 import random
+import monsters
 
 def Start():
     print("Welcome to TextVentures!")
@@ -26,29 +27,30 @@ def Start():
                 item = random.choice(["sword", "shield", "potion"])
                 player.pick_item(item)
             elif event == "monster":
-                print("\nA wild monster appears!")
+                monster = random.choice(monsters.monsterList)
+                print(f"\nA wild {monster.get_name()} appears!")
                 action = input("Do you want to (fight) or (flee)? ").strip().lower()
                 if action == "fight":
-                    if random.randint(1, player.get_strength()) > random.randint(1, 20):
+                    if random.randint(1, player.get_strength()) > random.randint(1, monster.get_strength()):
                         print("\nYou defeated the monster!")
-                        player.gain_experience(20)
+                        player.gain_experience(monster.get_exp())
                     else:
                         print("\nYou lost the fight!")
                         player.lose_life()
-                        potion_action = input("\nWould you like to use a potion to restore a life? (yes/no)")
-                        if potion_action.lower() == "yes":
-                            player.use_potion()
+                        if player.show_inventory().count("potion") > 0:
+                            if input("\nWould you like to use a potion to restore a life? (yes/no)") == "yes":
+                                player.use_potion()
                         else:
                             print("\nYou chose not to use a potion.")
                 elif action == "flee":
-                    if random.randint(1, player.get_strength()) > random.randint(1, 20):
+                    if random.randint(1, 2 * player.get_strength()) > random.randint(1, monster.get_strength()):
                         print("\nYou fled safely.")
                     else:
                         print("\nYou couldn't escape!")
                         player.lose_life()
-                        potion_action = input("\nWould you like to use a potion to restore a life? (yes/no)")
-                        if potion_action.lower() == "yes":
-                            player.use_potion()
+                        if player.show_inventory().count("potion") > 0:
+                            if input("\nWould you like to use a potion to restore a life? (yes/no)") == "yes":
+                                player.use_potion()
                         else:
                             print("\nYou chose not to use a potion.")
                 else:
@@ -67,6 +69,8 @@ def Start():
             player.use_potion()
         elif command == "shield":
             player.equip("shield")
+        elif command == "level":
+            player.get_level()
         elif command == "exit":
             print("\nThanks for playing!")
             break
