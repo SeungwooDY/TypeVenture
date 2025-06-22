@@ -25,6 +25,9 @@ class Equipment:
     def get_stat(self):
         return self.stat
     
+    def set_stat(self, new):
+        self.stat = new
+    
     def get_rarity(self):
         return self.rarity
     

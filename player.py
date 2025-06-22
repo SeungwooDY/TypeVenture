@@ -127,5 +127,6 @@ class Player:
         if self.inventory.count(item) >= 3:
             self.inventory.remove(item)
             upgraded_item = "upgraded " + item
+            upgraded_item.set_stat(item.get_stat() * 5)
             self.inventory.append(upgraded_item)
             print(f"\nYou upgraded your {item} to {upgraded_item}.")

@@ -35,6 +35,7 @@ def Start():
                     if random.randint(1, player.get_strength()) > random.randint(1, monster.get_strength()):
                         print("\nYou defeated the monster!")
                         player.gain_experience(monster.get_exp())
+                        player.level_up()
                     else:
                         print("\nYou lost the fight!")
                         player.lose_life()
