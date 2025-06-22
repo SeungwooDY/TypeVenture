@@ -38,7 +38,7 @@ def Start():
                     else:
                         print("\nYou lost the fight!")
                         player.lose_life()
-                        if player.show_inventory().count("potion") > 0:
+                        if player.inventory.count("potion") > 0:
                             if input("\nWould you like to use a potion to restore a life? (yes/no)") == "yes":
                                 player.use_potion()
                         else:
@@ -49,7 +49,7 @@ def Start():
                     else:
                         print("\nYou couldn't escape!")
                         player.lose_life()
-                        if player.show_inventory().count("potion") > 0:
+                        if player.inventory.count("potion") > 0:
                             if input("\nWould you like to use a potion to restore a life? (yes/no)") == "yes":
                                 player.use_potion()
                         else:
@@ -59,7 +59,7 @@ def Start():
             else:
                 print("\nYou found nothing of interest here.")
         elif command == "inventory":
-            print(str(player.show_inventory()))
+            player.show_inventory()
         elif command == "strength":
             print(f"\nYour current strength is {player.get_strength()}.")
         elif command == "lives":
@@ -68,8 +68,15 @@ def Start():
             print(f"You need {player.get_level_up_threshold() - player.get_experience()} experience points to level up.")
         elif command == "potion":
             player.use_potion()
-        elif command == "shield":
-            player.equip("shield")
+        elif command == "armor":
+            # Find the object first
+            shield = next((item for item in player.get_inventory() if item.get_type() == equipment.EquipmentType.ARMOR), None)
+            if shield:
+                player.equip(shield)  # You pass the object itself
+        elif command == "weapon":
+            sword = next((item for item in player.get_inventory() if item.get_type() == equipment.EquipmentType.WEAPON), None)
+            if sword:
+                player.equip(sword)
         elif command == "level":
             player.get_level()
         elif command == "exit":

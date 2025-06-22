@@ -1,9 +1,8 @@
 import random as rdm
+import json
+import equipment
 
 locations = ["castle", "cave", "woods", "village", "mountain", "forest"]
-
-level_up_threshold = 100
-player_level = 1
 
 class Player:
     def __init__(self, name):
@@ -14,6 +13,8 @@ class Player:
         self.max_lives = 3
         self.experience = 0
         self.strength = 10
+        self.player_level = 1
+        self.level_up_threshold = 100
 
     def move(self, direction):
         if direction == "north":
@@ -34,6 +35,14 @@ class Player:
         return self.location
     
     def show_inventory(self):
+        if not self.inventory:
+            print("\nYour inventory is empty.")
+        else:
+            print("\nYour inventory contains:")
+            for item in self.inventory:
+                print(f"\n- {item}")
+
+    def get_inventory(self):
         return self.inventory
     
     def get_lives(self):
@@ -46,10 +55,10 @@ class Player:
         return self.strength
     
     def get_level_up_threshold(self):
-        return level_up_threshold
+        return self.level_up_threshold
     
     def get_level(self):
-        return player_level
+        return self.player_level
     
     def lose_life(self):
         self.lives -= 1
@@ -57,24 +66,25 @@ class Player:
         if self.lives <= 0:
             print("\nGame Over! You have no lives left.")
             exit()
-    
+
     def use_potion(self):
-        if "potion" in self.inventory:
-            self.lives += 1
-            self.inventory.remove("potion")
-            print("\nYou used a potion and gained a life!")
-        else:
-            print("\nYou don't have a potion to use.")
+        for item in self.inventory:
+            if item.get_type() == equipment.EquipmentType.POTION:
+                self.inventory.remove(item)
+                self.lives += item.get_stat()
+                print(f"\nYou used a potion and gained {item.get_stat()} lives!")
+                return
+        print("\nYou don't have a potion to use.")
 
     def gain_experience(self, amount):
         self.experience += amount
         print(f"\nYou gained {amount} experience points! Experience left to level up: {100 - self.experience}")
     
     def level_up(self):
-        if self.experience >= level_up_threshold:
-            self.experience = self.experience - level_up_threshold
+        if self.experience >= self.level_up_threshold:
+            self.experience = self.experience - self.level_up_threshold
             print(f"\nCongratulations {self.name}! You leveled up!")
-            level_up_threshold *= 1.5
+            self.level_up_threshold *= 1.5
             self.lives += 1
             self.strength += 5
             print("\nCongratulations! You leveled up and gained an extra life!")
@@ -94,30 +104,23 @@ class Player:
                 self.equip(item)
 
     def equip(self, item):
-        if item == "sword":
-            self.strength += 5
-            print("\nYou equipped a sword. Strength increased by 5.")
-            self.inventory.remove("sword")
-        elif item == "upgraded sword":
-            self.strength += 20
-            print("\nYou equipped an upgraded sword. Strength increased by 20.")
-            self.inventory.remove("upgraded sword")
-        elif item == "shield":
-            self.max_lives += 1
-            print("\nYou equipped a shield. Lives increased by 1.")
-            self.inventory.remove("shield")
-        elif item == "upgraded shield":
-            self.max_lives += 5
-            print("\nYou equipped an upgraded shield. Lives increased by 5.")
-            self.inventory.remove("upgraded shield")
-        elif item == "potion":
-            self.inventory.append("potion")
-            print("\nYou equipped a potion. You can use it to restore a life.")
-        elif item == "upgraded potion":
+        if item.get_type() == equipment.EquipmentType.WEAPON:
+            self.strength += item.get_stat()
+            self.inventory.remove(item)
+            print(f"\nYou equipped a {item}. Strength increased by {item.get_stat()}.")
+        elif item.get_type() == equipment.EquipmentType.ARMOR:
+            self.lives += item.get_stat()
+            self.inventory.remove(item)
+            print(f"\nYou equipped a {item}. Lives increased by {item.get_stat()}")
+        elif item.get_type() == equipment.EquipmentType.POTION:
             self.inventory.append("potion")
             print("\nYou equipped a potion. You can use it to restore a life.")
         else:
-            print("\nUnknown item!")
+            print("can't identify item type")
+            print("DEBUG:", item, type(item))
+            print("item type:", item.get_type())
+
+        return
     
     def upgrade_item(self, item):
         if self.inventory.count(item) >= 3:
