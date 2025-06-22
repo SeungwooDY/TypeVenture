@@ -38,22 +38,12 @@ def Start():
                     else:
                         print("\nYou lost the fight!")
                         player.lose_life()
-                        if player.inventory.count("potion") > 0:
-                            if input("\nWould you like to use a potion to restore a life? (yes/no)") == "yes":
-                                player.use_potion()
-                        else:
-                            print("\nYou chose not to use a potion.")
                 elif action == "flee":
                     if random.randint(1, 2 * player.get_strength()) > random.randint(1, monster.get_strength()):
                         print("\nYou fled safely.")
                     else:
                         print("\nYou couldn't escape!")
                         player.lose_life()
-                        if player.inventory.count("potion") > 0:
-                            if input("\nWould you like to use a potion to restore a life? (yes/no)") == "yes":
-                                player.use_potion()
-                        else:
-                            print("\nYou chose not to use a potion.")
                 else:
                     print("\nInvalid action.")
             else:

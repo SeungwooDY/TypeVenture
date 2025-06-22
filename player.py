@@ -93,7 +93,7 @@ class Player:
             print("\nNot enough experience to level up.")
 
     def pick_item(self, item):
-        if len(self.inventory) > 10:
+        if len(self.inventory) >= 10:
             print("\nYour inventory is full! You cannot pick up any more items.")
         else: 
             self.inventory.append(item)
@@ -113,12 +113,13 @@ class Player:
             self.inventory.remove(item)
             print(f"\nYou equipped a {item}. Lives increased by {item.get_stat()}")
         elif item.get_type() == equipment.EquipmentType.POTION:
-            self.inventory.append("potion")
-            print("\nYou equipped a potion. You can use it to restore a life.")
-        else:
-            print("can't identify item type")
-            print("DEBUG:", item, type(item))
-            print("item type:", item.get_type())
+            self.lives += item.get_stat()
+            self.inventory.remove(item)
+            print(f"\nYou equipped a potion. You used it to restore {item.get_stat()} lives.")
+        # else:
+        #     print("can't identify item type")
+        #     print("DEBUG:", item, type(item))
+        #     print("item type:", item.get_type())
 
         return
     
