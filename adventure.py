@@ -70,6 +70,8 @@ def Start():
                 player.equip(sword)
         elif command == "level":
             player.get_level()
+        elif command == "merge":
+            player.upgrade_item()
         elif command == "exit":
             print("\nThanks for playing!")
             break
