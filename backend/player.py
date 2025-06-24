@@ -1,6 +1,6 @@
 import random
 import json
-import equipment
+from backend import monsters, equipment
 
 
 locations = ["castle", "cave", "woods", "village", "mountain", "forest"]

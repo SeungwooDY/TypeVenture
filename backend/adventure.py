@@ -1,7 +1,17 @@
-from player import Player
+from backend.player import Player
+from backend import monsters, equipment
 import random
-import monsters
-import equipment
+
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)
+
+@app.route("/api/command", methods=["POST"])
+def handle_command():
+    data = request.get_json() # Get JSON data sent from frontend
+    command = data.get("command", "").strip().lower()
 
 def Start():
     print("Welcome to TextVentures!")

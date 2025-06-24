@@ -25,7 +25,7 @@ class Monster:
 
 
 # Define some monsters with their attributes
-with open ("monster.json") as file:
+with open ("backend/monster.json") as file:
     monsters_data = json.load(file)
 
 monsterList = []

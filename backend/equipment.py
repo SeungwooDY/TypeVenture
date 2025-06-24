@@ -35,7 +35,7 @@ class Equipment:
         return self.type
     
 # Define some equipment with their attributes
-with open("equipment.json") as file:
+with open("backend/equipment.json") as file:
     equipment_data = json.load(file)
 
 equipmentList = []
