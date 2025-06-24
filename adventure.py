@@ -28,25 +28,8 @@ def Start():
                 item = random.choice(equipment.equipmentList)
                 player.pick_item(item)
             elif event == "monster":
-                monster = random.choice(monsters.monsterList)
-                print(f"\nA wild {monster.get_name()} appears!")
-                action = input("Do you want to (fight) or (flee)? ").strip().lower()
-                if action == "fight":
-                    if random.randint(1, player.get_strength()) > random.randint(1, monster.get_strength()):
-                        print("\nYou defeated the monster!")
-                        player.gain_experience(monster.get_exp())
-                        player.level_up()
-                    else:
-                        print("\nYou lost the fight!")
-                        player.lose_life()
-                elif action == "flee":
-                    if random.randint(1, 2 * player.get_strength()) > random.randint(1, monster.get_strength()):
-                        print("\nYou fled safely.")
-                    else:
-                        print("\nYou couldn't escape!")
-                        player.lose_life()
-                else:
-                    print("\nInvalid action.")
+                # monster = random.choice(monsters.monsterList)
+                player.start_battle(random.choice(monsters.monsterList))
             else:
                 print("\nYou found nothing of interest here.")
         elif command == "inventory":

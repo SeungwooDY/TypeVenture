@@ -1,6 +1,7 @@
-import random as rdm
+import random
 import json
 import equipment
+
 
 locations = ["castle", "cave", "woods", "village", "mountain", "forest"]
 
@@ -58,7 +59,7 @@ class Player:
         return self.level_up_threshold
     
     def get_level(self):
-        return self.player_level
+        print(f"\nYou are currently at level {self.player_level}.")
     
     def lose_life(self):
         self.lives -= 1
@@ -124,9 +125,36 @@ class Player:
         return
     
     def upgrade_item(self, item):
-        if self.inventory.count(item) >= 3:
-            self.inventory.remove(item)
-            upgraded_item = "upgraded " + item
-            upgraded_item.set_stat(item.get_stat() * 5)
-            self.inventory.append(upgraded_item)
-            print(f"\nYou upgraded your {item} to {upgraded_item}.")
+        for item in self.inventory:
+            if self.inventory.count(item) >= 3:
+                self.inventory.remove(item)
+                upgraded_item = item
+                upgraded_item.set_stat(item.get_stat() * 5)
+                self.inventory.append(upgraded_item)
+                print(f"\nYou upgraded your {item} to {upgraded_item}.")
+
+    def start_battle(self, monster):
+        battle = True
+        print(f"\nA wild {monster.get_name()} appears!")
+        while battle:
+            action = input("Do you want to (fight) or (flee)? ").strip().lower()
+            if action == "fight":
+                if random.randint(1, self.get_strength()) > random.randint(1, monster.get_strength()):
+                    print("\nYou defeated the monster!")
+                    self.gain_experience(monster.get_exp())
+                    self.level_up()
+                    battle = False
+                else:
+                    print("\nYou lost the fight!")
+                    self.lose_life()
+                    battle = False
+            elif action == "flee":
+                if random.randint(1, 2 * self.get_strength()) > random.randint(1, monster.get_strength()):
+                    print("\nYou fled safely.")
+                    battle = False
+                else:
+                    print("\nYou couldn't escape!")
+                    self.lose_life()
+                    battle = False
+            else:
+                print("\nInvalid action.")
